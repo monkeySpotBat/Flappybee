@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy-bee - Hauptmenü</title>
+    <style>
+       body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #eee;
+        }
+
+        #container {
+            position: relative;
+            text-align: center;
+        }c
+
+        canvas {
+            border: 1px solid #000;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+        }
+
+        #video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 800px;
+            height: 600px;
+            object-fit: cover;
+            z-index: -1; 
+        }
+
+        #menu, #gameOverScreen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-family: Arial, sans-serif;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #gameOverScreen button {
+            width: 150px; /* Hier die Breite nach Bedarf anpassen */
+            font-size: 20px;
+            margin: 10px 0;
+            padding: 15px 30px;
+            cursor: pointer;
+            background-color: #3498db; /* Rote Farbe für den Button */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+
+
+#menu button {
+            width: 170px; /* Änderung der Breite auf 50% */
+            font-size: 20px;
+            top: 60%;
+            margin: 10px 0;
+            padding: 15px 30px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+#menu button:hover {
+    background-color: green; /* Grüne Hover-Farbe für den Hauptmenü-Button im Hauptmenü */
+}
+
+#gameOverScreen #mainMenuButton:hover { /* Neuen Selektor für den Hauptmenü-Button im Game Over Screen hinzugefügt */
+    background-color: red; /* Rote Hover-Farbe für den Hauptmenü-Button im Game Over Screen */
+}
+
+#menu #exitButton:hover {
+    background-color: red; /* Rote Hover-Farbe für den Exit-Button im Hauptmenü */
+}
+
+#exitButton.clicked {
+            background-image: url('ressource/Quit-Button-2.png');
+        }
+
+#gameOverScreen button:hover {
+    background-color: green; /* Grüne Hover-Farbe für den Game Over Screen Button */
+}
+
+        /* Animation für den Game Over Screen */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        #gameOverScreen {
+            display: none; /* Startet unsichtbar */
+            animation: fadeIn 1s ease-in-out forwards; /* Animation wird angewendet */
+        }
+
+        #gameOverScreen.show {
+            display: flex; /* Wird sichtbar */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.9); /* Hintergrundfarbe mit Transparenz */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 82%;
+            max-width: 400px;
+            z-index: 4; /* Über dem Spielcanvas */
+        }
+
+        #countdownDisplay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #000; /* Schwarz */
+            font-size: 48px;
+            display: none; /* Startet unsichtbar */
+        }
+
+
+
+        #versionDisplay {
+    position: absolute;
+    top: 10px;
+    left: 20px; /* Hier den Wert anpassen, um es weiter nach links zu verschieben */
+    
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+#infoButton {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+        }
+
+    #infoButton:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+    
+    
+
+        #scoreDisplay, #bestScoreDisplay {
+    color: #000000;
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+#currentScore, #bestScore {
+    font-weight: bold;
+}
+
+
+
+
+        #startButton.clicked {
+            background-image: url('ressource/Play-Button-Click.png');
+        }
+
+
+
+#restartButton,
+#mainMenuButton {
+    width: 50%;
+    top: 60%;
+    font-size: 20px;
+    margin: 10px 0;
+    padding: 15px 30px;
+    cursor: pointer;
+    background-color: #e74c3c; /* Rote Farbe für den Button */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+#restartButton:hover,
+#restartButton:hover #mainMenuButton:hover {
+    background-color: green; /* Grüne Farbe für den Button beim Hover */
+}
+
+#mainMenuButton:hover {
+    background-color: #3498db; /* Dunkleres Blau beim Hover für den Hauptmenü-Button */
+}
+
+
+
+#menu #optionsButton {
+            background-image: url('ressource/options-Button.png');
+            /* Hinzugefügter Hintergrund */
+            background-size: cover;
+            cursor: pointer;
+            overflow: hidden;
+            width: 200px;
+            height: 80px;
+        }
+
+
+        #soundControls {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border: 2px solid #000;
+            z-index: 999;
+        }
+
+
+    </style>
+</head>
+<body>
+    
+    <div id="container">
+        <div id="versionDisplay">v0.1.0</div>
+        <button id="infoButton">Info</button>
+        <canvas id="flappyCanvas" width="800" height="600"></canvas>
+        <video id="video" width="200" height="600" loop muted>
+            <source src="ressource/background.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+    <div id="menu">
+        <!-- Ändere den Button zu einem DIV-Element, um den Hintergrund ändern zu können -->
+        <div id="startButton"></div>
+        <div id="optionsButton"></div>
+        <div id="exitButton"></div>
+    </div>
+
+
+        <div id="gameOverScreen">
+            <h1>Game Over</h1>
+            <p id="scoreDisplay">Score: <span id="currentScore">0</span></p>
+            <p id="bestScoreDisplay">Best: <span id="bestScore">0</span></p>
+            <button id="restartButton">Neustart</button>
+            <button id="mainMenuButton">Hauptmenü</button>
+        </div>
+    
+
+        <div id="countdownDisplay"></div>
+    </div>
+
+    <audio id="hoverSound" >
+        <source src="ressource/sfx.wav" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <audio id="backgroundMusic" volume="1" loop autoplay>
+        <source src="ressource/music.MP3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div id="soundControls" style="display: none;">
+        <h2>Music :D</h2>
+
+        
+
+
+        <audio id="backgroundMusic" volume="1" loop controls autoplay>
+            <source src="ressource/music.MP3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+
+
+        <button id="closeSoundControls">Close</button>
+    </div>
+
+
+    <script>
+        const canvas = document.getElementById('flappyCanvas');
+        const ctx = canvas.getContext('2d');
+        const video = document.getElementById('video');
+
+        const canvasWidth = 400; // Deine gewünschte Breite
+        const canvasHeight = 600;
+
+    // Setze die Breite und Höhe des Video-Elements im Canvas
+    video.width = canvasWidth;
+    video.height = canvasHeight;
+
+
+
+        video.loop = true;
+        video.muted = true;
+        video.autoplay = true;
+
+        document.getElementById('infoButton').addEventListener('click', function () {
+    window.open('https://flappy-bee-info.vercel.app', '_blank');
+});
+
+
+
+
+
+
+        const initialBirdPosition = {
+            x: 100,
+            y: canvas.height / 2 - 15,
+        };
+
+
+        // Bilder laden
+        const playerFrames = [
+            new Image(),
+            new Image(),
+            new Image()
+        ];
+
+        playerFrames[0].src = 'ressource/Player-1.png'; // Pfad zum ersten Bild
+        playerFrames[1].src = 'ressource/Player-2.png'; // Pfad zum zweiten Bild
+        playerFrames[2].src = 'ressource/zwischenframe.png';
+
+        
+
+
+        let currentFrame = 0; // Aktueller Frame des Spielers
+let bird = {
+    x: initialBirdPosition.x,
+    y: initialBirdPosition.y,
+    width: 30,
+    height: 30,
+    velocity: 0,
+    gravity: 0.1,
+    jumpStrength: -5,
+};
+
+ 
+
+
+
+function drawBird() {
+            ctx.save();
+            ctx.translate(bird.x + bird.width / 2, bird.y + bird.height / 2);
+            ctx.rotate((rotationAngle * Math.PI) / 180);
+            ctx.drawImage(playerFrames[currentFrame], -bird.width / 2 - 32, -bird.height / 2 - 35, bird.width * 3, bird.height * 3);
+            ctx.restore();
+        }
+
+
+let obstacles = [];
+        let lastTimestamp = 0;
+        let gameRunning = false;
+        let obstacleSpawnInterval;
+        let restartClicked = false;
+        let countdownDisplay;
+        let rotationAngle = 0;
+        let rotateSpeed = 3;
+        let score = 0;
+        let bestScore = localStorage.getItem('bestScore') || 0;
+        const bestScoreDisplay = document.getElementById('bestScore');
+
+        
+
+
+        
+
+        function updateScore() {
+    score++;
+    document.getElementById('currentScore').innerText = score;
+
+    if (score > bestScore) {
+        bestScore = score;
+        updateBestScore();
+        localStorage.setItem('bestScore', bestScore);
+    }
+}
+
+function updateBestScore() {
+    bestScoreDisplay.innerText = bestScore;
+}
+
+
+    function resetScore() {
+        score = 0;
+        document.getElementById('currentScore').innerText = score;
+    }
+
+    bestScoreDisplay.innerText = bestScore;
+
+
+function handleKeyPress(event) {
+            if (event.code === 'Space' && gameRunning) {
+                rotationAngle = -25;
+                currentFrame = 1;
+            }
+        }
+
+// Füge eine Funktion hinzu, um die Rotation zurückzusetzen, wenn die Leertaste losgelassen wird
+function handleKeyRelease(event) {
+            if (event.code === 'Space' && gameRunning) {
+                rotationAngle = 0;
+                currentFrame = 0;
+            }
+        }
+
+        let isBouncing = false;
+
+        function rotateDown() {
+            if (rotationAngle < 90) {
+                rotationAngle += rotateSpeed;
+                requestAnimationFrame(rotateDown);
+            } else {
+                rotationAngle = 90;
+                currentFrame = 0;
+
+                if (isBouncing) {
+                    isBouncing = false;
+                    rotationAngle = 0;
+                    drawBird();
+                } else {
+                    requestAnimationFrame(drawBird);
+                }
+            }
+        }
+
+
+        document.addEventListener('keydown', handleKeyPress);
+        document.addEventListener('keyup', handleKeyRelease);
+
+        function updateBird() {
+            bird.velocity += bird.gravity;
+            bird.y += bird.velocity;
+
+            if (bird.y < 0) {
+                bird.y = 0;
+                bird.velocity = 0;
+            }
+            if (bird.y + bird.height > canvas.height) {
+                bird.y = canvas.height - bird.height;
+                bird.velocity = 0;
+            }
+        }
+
+        function flap() {
+            bird.velocity = bird.jumpStrength;
+            currentFrame = 1;
+        }
+
+        function drawObstacles() {
+            ctx.fillStyle = '#0F0';
+            for (const obstacle of obstacles) {
+                ctx.fillRect(obstacle.x, 0, obstacle.width, obstacle.topHeight);
+                ctx.fillRect(obstacle.x, obstacle.bottomStart, obstacle.width, obstacle.bottomHeight);
+            }
+        }
+
+        function updateObstacles() {
+            obstacles = obstacles.filter(obstacle => obstacle.x + obstacle.width > 0);
+
+            obstacles.forEach(obstacle => {
+                obstacle.x -= 2;
+
+                if (
+                    bird.x < obstacle.x + obstacle.width &&
+                    bird.x + bird.width > obstacle.x &&
+                    (bird.y < obstacle.topHeight || bird.y + bird.height > obstacle.bottomStart)
+                ) {
+                    gameOver();
+                } else if (bird.x === obstacle.x + obstacle.width) {
+                    // Increase score when passing through an obstacle
+                    updateScore();
+                }
+            });
+        }
+
+        function spawnObstacle() {
+            const gapHeight = Math.random() * (canvas.height * 0.4) + 50;
+            obstacles.push({
+                x: canvas.width,
+                width: 30,
+                topHeight: gapHeight,
+                bottomStart: gapHeight + 150,
+                bottomHeight: canvas.height - gapHeight - 150,
+            });
+        }
+
+        function resetGame() {
+            bird = {
+                x: initialBirdPosition.x,
+                y: initialBirdPosition.y,
+                width: 30,
+                height: 30,
+                velocity: 0,
+                gravity: 0.1,
+                jumpStrength: -5,
+                isHit: false,
+            };
+
+            obstacles = [];
+            gameRunning = false;
+            restartClicked = false;
+            clearInterval(obstacleSpawnInterval);
+            document.getElementById('menu').style.display = 'flex';
+            document.getElementById('gameOverScreen').classList.remove('show');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            resetScore();
+        }
+
+        function restartGame() {
+        resetGame();
+        resetScore();  // Hier die Reset-Funktion für den Score aufrufen
+        document.getElementById('menu').style.display = 'none';
+
+        gameRunning = true;
+        bird.isHit = false;
+        drawCountdown();
+        drawBird();
+
+            let countdown = 3;
+            countdownDisplay.innerText = `${countdown}`;
+            countdownDisplay.style.display = 'block';
+            countdownDisplay.style.color = '#000';
+            countdownDisplay.style.fontSize = '48px';
+
+            function updateCountdown() {
+                countdown--;
+
+                if (countdown >= 0) {
+                    countdownDisplay.innerText = `${countdown}`;
+                    setTimeout(updateCountdown, 1000);
+                } else {
+                    countdownDisplay.style.display = 'none';
+                    restartClicked = false;
+                    gameRunning = true;
+                    obstacleSpawnInterval = setInterval(spawnObstacle, 1000);
+                    requestAnimationFrame(gameLoop);
+                }
+            }
+
+            updateCountdown();
+        }
+        function toggleOptions() {
+            var optionsButton = document.getElementById('optionsButton');
+            optionsButton.style.backgroundImage = 'url(\'ressource/options-button-2.png\')';
+            // Hier kannst du weitere Aktionen für die Options implementieren
+        }
+
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+    const optionsButton = document.getElementById('optionsButton');
+    const soundControls = document.getElementById('soundControls');
+    const sfxVolumeInput = document.getElementById('sfxVolume');
+    const closeSoundControlsButton = document.getElementById('closeSoundControls');
+    const hoverSound = document.getElementById('hoverSound');
+
+    optionsButton.addEventListener('click', function () {
+        // Hier füge die Aktionen für den Options-Button-Click hinzu
+        toggleOptions(); // Implementiere diese Funktion entsprechend deinen Anforderungen
+
+        // Öffne den Sound Controls Container
+        soundControls.style.display = 'block';
+    });
+
+    optionsButton.addEventListener('mouseenter', function () {
+        hoverSound.currentTime = 0;
+        hoverSound.play();
+    });
+
+    optionsButton.addEventListener('mousedown', function () {
+        this.style.backgroundImage = "url('ressource/Options-button-2.png')";
+    });
+
+    optionsButton.addEventListener('mouseup', function () {
+        if (!isOptionsSelected()) {
+            this.style.backgroundImage = "url('ressource/Options-Button.png')";
+        }
+    });
+
+    optionsButton.addEventListener('mouseout', function () {
+        this.style.backgroundImage = "url('ressource/Options-Button.png')";
+    });
+
+    closeSoundControlsButton.addEventListener('click', function () {
+        soundControls.style.display = 'none';
+    });
+
+    playPauseMusicButton.addEventListener('click', function () {
+        toggleMusicPlayback();
+    });
+
+    bgMusicVolumeInput.addEventListener('input', function () {
+        const volume = this.value / 100;
+        // Hier kann die Logik zum Aktualisieren der Hintergrundmusik-Lautstärke eingefügt werden
+    });
+
+    sfxVolumeInput.addEventListener('input', function () {
+        // Hier kannst du die Soundeffekte-Lautstärke aktualisieren
+        const volume = this.value / 100;
+        hoverSound.volume = volume; // Setze die Lautstärke des Hover-Sounds
+    });
+});
+
+function isOptionsSelected() {
+    return false;
+}
+
+function updateBackgroundMusicVolume(volume) {
+    // Hier kann die Logik zum Aktualisieren der Hintergrundmusik-Lautstärke eingefügt werden
+}
+
+function updateSFXVolume(volume) {
+    // Hier kann die Logik zum Aktualisieren der SFX-Lautstärke eingefügt werden
+}
+
+function toggleMusicPlayback() {
+    // Hier kann die Logik zum Abspielen/Pausieren der Hintergrundmusik eingefügt werden
+}
+
+
+
+
+        function gameOver() {
+            if (!bird.isHit) {
+                bird.isHit = true;
+                isBouncing = true;
+                bird.y -= 15;
+
+                if (bird.y < 0) {
+                    bird.y = 0;
+                }
+
+                bird.velocity = -bird.jumpStrength;
+                rotateDown();
+
+                setTimeout(() => {
+                    bird.velocity = bird.gravity;
+                    document.getElementById('gameOverScreen').classList.add('show');
+                    gameRunning = false;
+                    clearInterval(obstacleSpawnInterval);
+                }, 300);
+            } else {
+                document.getElementById('gameOverScreen').classList.add('show');
+                gameRunning = false;
+                clearInterval(obstacleSpawnInterval);
+            }
+        }
+
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            drawObstacles();
+            drawBird();
+        }
+
+        function drawCountdown() {
+            countdownDisplay = document.getElementById('countdownDisplay');
+        }
+
+        function gameLoop(timestamp) {
+            const deltaTime = timestamp - lastTimestamp;
+            lastTimestamp = timestamp;
+
+            updateBird();
+            updateObstacles();
+            draw();
+
+            if (gameRunning) {
+                requestAnimationFrame(gameLoop);
+            }
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+    const hoverSound = document.getElementById('hoverSound');
+    const container = document.getElementById('container');
+    const exitButton = document.getElementById('exitButton');
+    const startButton = document.getElementById('startButton');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+
+
+    
+    exitButton.id = 'exitButton';
+    exitButton.style.backgroundImage = "url('ressource/Quit-Button.png')";
+    exitButton.style.backgroundSize = 'cover';
+    exitButton.style.cursor = 'pointer';
+    exitButton.style.overflow = 'hidden';
+    exitButton.style.width = '170px';
+    exitButton.style.height = '80px';
+    exitButton.style.position = 'absolute';
+    exitButton.style.top = '65%';
+    exitButton.style.left = '50%';
+    exitButton.style.transform = 'translate(-50%, -50%)';
+    exitButton.style.transition = 'opacity 0.5s';
+    exitButton.style.opacity = '1';
+  
+
+    // Füge den Exit-Button zum Container hinzu
+    container.appendChild(exitButton);
+
+    // Event-Listener für den Exit-Button
+    exitButton.addEventListener('mouseenter', function () {
+        hoverSound.currentTime = 0;
+        hoverSound.play();
+    });
+
+    exitButton.addEventListener('mousedown', function () {
+        this.style.backgroundImage = "url('ressource/Quit-Button-2.png')";
+    });
+
+    exitButton.addEventListener('mouseup', function () {
+        this.style.backgroundImage = "url('ressource/Quit-Button.png')";
+    });
+
+    exitButton.addEventListener('click', function () {
+        window.close();
+    });
+
+    // Event-Listener für den Start-Button
+
+    startButton.addEventListener('click', function () {
+                if (!gameRunning) {
+                    hoverSound.currentTime = 0;
+                    hoverSound.play();
+
+                    gameRunning = true;
+                    document.getElementById('menu').style.display = 'none';
+                    document.getElementById('gameOverScreen').classList.remove('show');
+                    restartClicked = false;
+                    requestAnimationFrame(gameLoop);
+                    obstacleSpawnInterval = setInterval(spawnObstacle, 1000);
+                    this.style.opacity = '0';
+                    this.style.pointerEvents = 'none';
+
+                    // Starte die Hintergrundmusik beim Klick auf den Start-Button
+                    backgroundMusic.play().then(() => {
+                        // Die Hintergrundmusik wird abgespielt, wenn der Benutzer mit der Seite interagiert hat
+                    }).catch(error => console.error(error));
+                }
+            });
+});
+
+
+
+
+        const startButton = document.getElementById('startButton');
+
+
+
+        startButton.addEventListener('click', function () {
+            if (!gameRunning && !restartClicked) {
+                hoverSound.currentTime = 0;
+                hoverSound.play();
+
+                gameRunning = true;
+                document.getElementById('menu').style.display = 'none';
+                document.getElementById('gameOverScreen').classList.remove('show');
+                restartClicked = false;
+                requestAnimationFrame(gameLoop);
+                obstacleSpawnInterval = setInterval(spawnObstacle, 1000);
+                this.style.opacity = '0';
+                this.style.pointerEvents = 'none';
+                exitButton.style.display = 'none'; // Verberge den Quit-Button
+            }
+        });
+
+        const mainMenuButton = document.getElementById('mainMenuButton');
+        mainMenuButton.addEventListener('click', function () {
+            resetGame();
+            document.getElementById('menu').style.display = 'flex';
+
+            // Verwende denselben Start-Button für den Hauptmenü-Button
+            startButton.style.opacity = '1';
+            startButton.style.pointerEvents = 'auto';
+            exitButton.style.display = 'block'; // Zeige den Quit-Button wieder an
+            drawBird();
+        });
+  
+
+    document.getElementById('exitButton').addEventListener('transitionend', function () {
+        this.classList.remove('clicked');
+    });
+
+    document.getElementById('exitButton').addEventListener('click', function () {
+        window.close(); // Versuche, das aktuelle Fenster oder den Tab zu schließen
+    });
+
+
+
+    // Start-Button als Bild erstellen
+    document.addEventListener('DOMContentLoaded', function () {
+            // ... (Rest des DOMContentLoaded-Event-Codes bleibt unverändert) ...
+
+            const startButton = document.createElement('div');
+            startButton.id = 'startButton';
+            startButton.style.backgroundImage = "url('ressource/Play-Button.png')";
+            startButton.style.backgroundSize = 'cover';
+            startButton.style.cursor = 'pointer';
+            startButton.style.overflow = 'hidden';
+            startButton.style.width = '200px';
+            startButton.style.height = '80px';
+            startButton.style.position = 'absolute';
+            startButton.style.top = '40%';
+            startButton.style.left = '50%';
+            startButton.style.transform = 'translate(-50%, -50%)';
+            startButton.style.transition = 'opacity 0.5s';
+            startButton.style.opacity = '1';
+
+            startButton.addEventListener('mouseenter', function () {
+                hoverSound.currentTime = 0;
+                hoverSound.play();
+            });
+
+            startButton.addEventListener('mousedown', function () {
+                this.style.backgroundImage = "url('ressource/Play-Button-Click.png')";
+            });
+
+            startButton.addEventListener('mouseup', function () {
+                this.style.backgroundImage = "url('ressource/Play-Button.png')";
+            });
+
+            startButton.addEventListener('click', function () {
+                if (!gameRunning) {
+                    hoverSound.currentTime = 0;
+                    hoverSound.play();
+
+                    gameRunning = true;
+                    document.getElementById('menu').style.display = 'none';
+                    document.getElementById('gameOverScreen').classList.remove('show');
+                    restartClicked = false;
+                    requestAnimationFrame(gameLoop);
+                    obstacleSpawnInterval = setInterval(spawnObstacle, 1000);
+                    this.style.opacity = '0';
+                    this.style.pointerEvents = 'none';
+                    exitButton.style.display = 'none';
+                }
+            });
+
+            
+    const container = document.getElementById('container');
+            container.appendChild(startButton);
+
+            document.body.appendChild(startButton);
+
+            video.play().then(() => {
+                drawBird();
+            }).catch(error => console.error(error));
+
+            const hoverSound = document.getElementById('hoverSound');
+
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function () {
+                    hoverSound.currentTime = 0;
+                    hoverSound.play();
+                });
+            });
+        });
+
+
+        document.getElementById('startButton').addEventListener('transitionend', function () {
+            this.classList.remove('clicked');
+        });
+
+        document.getElementById('startButton').addEventListener('click', function () {
+            if (!gameRunning) {
+                gameRunning = true;
+                document.getElementById('menu').style.display = 'none';
+                document.getElementById('gameOverScreen').classList.remove('show');
+                restartClicked = false;
+                requestAnimationFrame(gameLoop);
+                obstacleSpawnInterval = setInterval(spawnObstacle, 1000);
+                this.style.backgroundImage = "url('ressource/Play-Button-Click.png')";
+           
+                document.addEventListener('click', startBackgroundMusic, { once: true });
+
+function startBackgroundMusic() {
+    backgroundMusic.play().then(() => {
+        // Die Hintergrundmusik wird abgespielt, wenn der Benutzer mit der Seite interagiert hat
+    }).catch(error => console.error(error));
+}
+  
+            }
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (gameRunning && event.code === 'Space') {
+                flap();
+            }
+        });
+
+
+        document.addEventListener('keyup', function (event) {
+            if (event.code === 'Space') {
+                isSpacePressed = false;
+                currentFrame = 0;
+            }
+        });
+
+
+        document.getElementById('exitButton').addEventListener('click', function () {
+    window.close(); // Versuche, das aktuelle Fenster oder den Tab zu schließen
+});
+
+        document.getElementById('restartButton').addEventListener('click', function () {
+            if (!restartClicked) {
+                restartClicked = true;
+                resetGame();
+                document.getElementById('menu').style.display = 'none';
+                restartGame();
+            }
+        });
+
+        document.getElementById('startButton').addEventListener('click', function () {
+    if (!gameRunning) {
+        hoverSound.currentTime = 0;
+        hoverSound.play();
+
+        gameRunning = true;
+        document.getElementById('menu').style.display = 'none';
+        document.getElementById('gameOverScreen').classList.remove('show');
+        restartClicked = false;
+        requestAnimationFrame(gameLoop);
+        obstacleSpawnInterval = setInterval(spawnObstacle, 1000);
+        this.style.opacity = '0';
+        this.style.pointerEvents = 'none';
+
+        // Verstecke den Exit-Button, wenn auf Start geklickt wird
+        const exitButton = document.getElementById('exitButton');
+        if (exitButton) {
+            exitButton.style.display = 'none';
+        }
+
+        function startBackgroundMusic() {
+        backgroundMusic.play().then(() => {
+
+        }).catch(error => console.error(error));
+    }
+}
+});
+
+        // Erweitere das Klick-Ereignis auch auf das DIV-Element des Start-Buttons
+        const startButtonDiv = document.getElementById('startButton');
+        if (startButtonDiv) {
+            startButtonDiv.addEventListener('click', function () {
+                startButton.click(); // Leite das Klick-Ereignis des DIV-Elements zum Bild-Button weiter
+            });
+        }
+
+        document.getElementById('mainMenuButton').addEventListener('click', function () {
+            resetGame();
+            document.getElementById('menu').style.display = 'flex';
+
+            // Verwende denselben Start-Button für den Hauptmenü-Button
+            const startButton = document.getElementById('startButton');
+            startButton.id = 'startButton';
+            startButton.style.backgroundImage = "url('ressource/Play-Button.png')";
+            startButton.style.backgroundSize = 'cover';
+            startButton.style.cursor = 'pointer';
+            startButton.style.overflow = 'hidden';
+            startButton.style.width = '200px';
+            startButton.style.height = '80px';
+            startButton.style.position = 'absolute';
+            startButton.style.top = '-72.9%';
+            startButton.style.left = '50%';
+            startButton.style.transform = 'translate(-50%, -50%)';
+            startButton.style.transition = 'opacity 0.5s';
+            startButton.style.opacity = '1';
+
+            // Füge das Hover-Sound-Ereignis zum Startbutton-Bild hinzu
+            const exitButton = document.getElementById('exitButton');
+            if (getComputedStyle(exitButton).display !== 'block') {
+                exitButton.style.display = 'block';
+            }
+
+            // Füge das Hover-Sound-Ereignis zum Startbutton-Bild hinzu
+            startButton.addEventListener('mouseenter', function () {
+                hoverSound.currentTime = 0;
+                hoverSound.play();
+            });
+
+            startButton.addEventListener('mousedown', function () {
+                this.style.backgroundImage = "url('ressource/Play-Button-Click.png')";
+            });
+
+            startButton.addEventListener('mouseup', function () {
+                this.style.backgroundImage = "url('ressource/Play-Button.png')";
+            });
+
+            startButton.addEventListener('click', function () {
+                if (!gameRunning) {
+                    hoverSound.currentTime = 0;
+                    hoverSound.play();
+
+                    gameRunning = true;
+                    document.getElementById('menu').style.display = 'none';
+                    document.getElementById('gameOverScreen').classList.remove('show');
+                    restartClicked = false;
+                    requestAnimationFrame(gameLoop);
+                    obstacleSpawnInterval = setInterval(spawnObstacle, 1000);
+                    this.style.opacity = '0';
+                    this.style.pointerEvents = 'none';
+                    exitButton.style.display = 'none';
+                    exitButton.style.display = 'none';
+                }
+            });
+
+            drawBird();
+        });
+        bird.x = initialBirdPosition.x;
+        bird.y = initialBirdPosition.y;
+        bird.velocity = 0;
+        gameRunning = false;
+    </script>
+</body>
+</html>

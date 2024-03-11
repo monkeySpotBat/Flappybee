@@ -245,7 +245,7 @@
 <body>
     
     <div id="container">
-        <div id="versionDisplay">v0.1.0</div>
+        <div id="versionDisplay">v0.1.1</div>
         <button id="infoButton">Info</button>
         <canvas id="flappyCanvas" width="800" height="600"></canvas>
         <video id="video" width="200" height="600" loop muted>
@@ -681,18 +681,30 @@ function toggleMusicPlayback() {
             countdownDisplay = document.getElementById('countdownDisplay');
         }
 
-        function gameLoop(timestamp) {
-            const deltaTime = timestamp - lastTimestamp;
-            lastTimestamp = timestamp;
+        const obstacleSpawnIntervalTime = 1000; // 1000 Millisekunden (1 Sekunde)
 
-            updateBird();
-            updateObstacles();
-            draw();
+function gameLoop(timestamp) {
+    const deltaTime = (timestamp - lastTimestamp) / 1000; // Zeitdifferenz in Sekunden
+    lastTimestamp = timestamp;
 
-            if (gameRunning) {
-                requestAnimationFrame(gameLoop);
-            }
+    // Überprüfe, ob es Zeit ist, ein neues Hindernis zu erzeugen
+    if (gameRunning) {
+        if (timestamp - lastObstacleSpawnTime >= obstacleSpawnIntervalTime) {
+             // Funktion zum Erzeugen eines Hindernisses aufrufen
+            lastObstacleSpawnTime = timestamp;
         }
+    }
+
+    updateBird(deltaTime);
+    updateObstacles(deltaTime);
+    draw();
+
+    if (gameRunning) {
+        requestAnimationFrame(gameLoop);
+    }
+}
+
+let lastObstacleSpawnTime = 0;
 
 
         document.addEventListener('DOMContentLoaded', function () {

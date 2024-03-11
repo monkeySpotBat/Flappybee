@@ -15,6 +15,84 @@
             background-color: #eee;
         }
 
+        #captcha-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            z-index: 9000;
+        }
+
+        #captcha-input {
+            width: 200px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        #captcha-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #captcha-message {
+            margin-top: 10px;
+            color: #333;
+        }
+
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .low-performance-screen {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.8);
+                color: white;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 500;
+            }
+            #play-button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+
         #container {
             position: relative;
             text-align: center;
@@ -243,6 +321,22 @@
     </style>
 </head>
 <body>
+
+    <div id="captcha-container">
+        <h2>Bitte löse das Captcha, um fortzufahren:</h2>
+        <p>Code: <strong id="captcha-code"></strong></p>
+        <input type="text" id="captcha-input" placeholder="Gib den Code ein">
+        <br>
+        <button id="captcha-button" onclick="checkCaptcha()">Überprüfen</button>
+        <p id="captcha-message"></p>
+        <div id="loader" class="loader" style="display:none;"></div>
+    </div>
+    
+    <div id="low-performance-screen" class="low-performance-screen" style="display: none;">
+        <h1>Ihr PC ist zu schwach</h1>
+        <p>Es besteht die möglichkeit das Ihr PC zu schwach ist.</p>
+        <button id="play-button">Trotzdem spielen</button>
+    </div>
     
     <div id="container">
         <div id="versionDisplay">v0.1.1</div>
@@ -322,7 +416,60 @@
 });
 
 
+const captchaCode = Math.random().toString(36).substring(7);
+        document.getElementById('captcha-code').textContent = captchaCode;
 
+        // Funktion zum Überprüfen des eingegebenen Captcha-Codes
+        function checkCaptcha() {
+            const userInput = document.getElementById('captcha-input').value;
+            if (userInput === captchaCode) {
+                document.getElementById('captcha-button').style.display = 'none';
+                document.getElementById('loader').style.display = 'inline-block';
+                setTimeout(function() {
+                    document.getElementById('captcha-message').textContent = "Captcha korrekt!";
+                    document.getElementById('loader').style.display = 'none';
+                    setTimeout(function() {
+                        document.getElementById('captcha-container').style.display = 'none';
+                    }, Math.floor(Math.random() * 3000) + 1000); // Zufällige Zeit zwischen 1 und 3 Sekunden
+                }, 1000);
+            } else {
+                document.getElementById('captcha-message').textContent = "Captcha falsch! Versuche es erneut.";
+            }
+        }
+
+
+
+
+
+function hideLowPerformanceScreen() {
+        const lowPerformanceScreen = document.getElementById('low-performance-screen');
+        lowPerformanceScreen.style.display = 'none';
+    }
+
+    // Überprüfe die GPU des Computers
+    function checkSystemGPU() {
+        // Beispiel: Überprüfen Sie, ob die GPU NVIDIA GTX 1650 oder niedriger ist
+        // Hier wird die GPU-Information simuliert
+        const userGPU = 'NVIDIA GTX 1650'; // Hier den Namen der tatsächlichen GPU eintragen
+
+        if (userGPU.includes('GTX') && parseInt(userGPU.match(/\d+/)[0]) <= 1650) {
+            showLowPerformanceScreen();
+        }
+    }
+
+    // Zeige den Bildschirm für schwache Leistung an
+    function showLowPerformanceScreen() {
+        // Zeige den Container für den Bildschirm für schwache Leistung an
+        const lowPerformanceScreen = document.getElementById('low-performance-screen');
+        lowPerformanceScreen.style.display = 'flex';
+    }
+
+    // Rufe die Funktion zum Überprüfen der GPU auf
+    checkSystemGPU();
+
+    // Event-Listener für den "Trotzdem spielen"-Button
+    const playButton = document.getElementById('play-button');
+    playButton.addEventListener('click', hideLowPerformanceScreen);
 
 
 
@@ -565,7 +712,6 @@ function handleKeyRelease(event) {
         function toggleOptions() {
             var optionsButton = document.getElementById('optionsButton');
             optionsButton.style.backgroundImage = 'url(\'ressource/options-button-2.png\')';
-            // Hier kannst du weitere Aktionen für die Options implementieren
         }
 
 

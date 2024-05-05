@@ -16,58 +16,57 @@
         }
 
         #captcha-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            z-index: 9000;
-        }
+    position: fixed;
+    width: 400px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    z-index: 9000;
+}
 
-        #captcha-input {
-            width: 200px;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
+#captcha-box {
+    width: 400px;
+    height: 200px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        #captcha-button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+#captcha-box::before {
+    content: "Ich bin kein Roboter";
+    font-size: 16px;
+    color: #333;
+}
 
-        #captcha-message {
-            margin-top: 10px;
-            color: #333;
-        }
+#captcha-box:hover {
+    background-color: #f0f0f0;
+}
 
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 4px solid #3498db;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            display: inline-block;
-            margin-left: 10px;
-            vertical-align: middle;
-        }
+.loader {
+    border: 4px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
+}
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
         .low-performance-screen {
                 position: fixed;
@@ -322,14 +321,23 @@
 </head>
 <body>
 
-    <div id="captcha-container">
-        <h2>Bitte löse das Captcha, um fortzufahren:</h2>
-        <p>Code: <strong id="captcha-code"></strong></p>
-        <input type="text" id="captcha-input" placeholder="Gib den Code ein">
-        <br>
-        <button id="captcha-button" onclick="checkCaptcha()">Überprüfen</button>
-        <p id="captcha-message"></p>
-        <div id="loader" class="loader" style="display:none;"></div>
+    <div id="captcha-container" style="text-align: center; font-family: Arial, sans-serif;">
+        <label id="captcha-label" for="captcha-checkbox" style="cursor: pointer; display: inline-block; font-size: 24px; position: relative; top: 10px;">
+            <input type="checkbox" id="captcha-checkbox" onclick="checkCaptcha()" style="display: none;">
+            <span style="position: relative; left: -170px; top: 10px; font-size: 40px;">☐</span>
+            <span style="position: absolute; top: 25px; left: -130px; display: inline-block;">Ich</span>
+            <span style="position: absolute; top: 25px; left: -90px; display: inline-block;">bin</span>
+            <span style="position: absolute; top: 25px; left: -50px; display: inline-block;">kein</span>
+            <span style="position: absolute; top: 25px; left: -0px; display: inline-block;">Roboter</span>
+            <span id="loader" class="loader" style="display: none; position: absolute; left: calc(60% - 195px); top: 27.5px; width: 15px; height: 15px;"></span>
+            <span id="checkmark" class="checkmark" style="display: none; position: absolute; left: calc(50% - 193px); top: 16px; width: 0px; height: 0px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24">
+                    <path fill="none" d="M0 0h24v24H0V0z"/>
+                    <path d="M9 16.2l-3.5-3.5 1.4-1.4L9 13.4l6.2-6.2 1.4 1.4z"/>
+                </svg>
+            </span>
+            <img src="ressource/captcha.jpg" alt="assd" style="position: absolute; right: -160px; top: -14px; height: 100px; width: auto;">
+        </label>
     </div>
     
     <div id="low-performance-screen" class="low-performance-screen" style="display: none;">
@@ -416,29 +424,27 @@
 });
 
 
-const captchaCode = Math.random().toString(36).substring(7);
-        document.getElementById('captcha-code').textContent = captchaCode;
-
-        // Funktion zum Überprüfen des eingegebenen Captcha-Codes
-        function checkCaptcha() {
-            const userInput = document.getElementById('captcha-input').value;
-            if (userInput === captchaCode) {
-                document.getElementById('captcha-button').style.display = 'none';
-                document.getElementById('loader').style.display = 'inline-block';
-                setTimeout(function() {
-                    document.getElementById('captcha-message').textContent = "Captcha korrekt!";
-                    document.getElementById('loader').style.display = 'none';
-                    setTimeout(function() {
-                        document.getElementById('captcha-container').style.display = 'none';
-                    }, Math.floor(Math.random() * 3000) + 1000); // Zufällige Zeit zwischen 1 und 3 Sekunden
-                }, 1000);
-            } else {
-                document.getElementById('captcha-message').textContent = "Captcha falsch! Versuche es erneut.";
-            }
-        }
 
 
+function checkCaptcha() {
+    const checkbox = document.getElementById('captcha-checkbox');
+    const loader = document.getElementById('loader');
+    const checkmark = document.getElementById('checkmark');
 
+    if (checkbox.checked) {
+        checkbox.disabled = true; // Disable checkbox while processing
+        loader.style.display = 'inline-block'; // Show loader
+
+        setTimeout(function() {
+            loader.style.display = 'none'; // Hide loader
+            checkmark.style.display = 'inline-block'; // Show checkmark
+
+            setTimeout(function() {
+                document.getElementById('captcha-container').style.display = 'none'; // Hide captcha container
+            }, Math.floor(Math.random() * 2000) + 1000); // Random time between 1 and 3 seconds
+        }, 1000); // Simulate processing time
+    }
+}
 
 
 function hideLowPerformanceScreen() {

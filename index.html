@@ -68,28 +68,34 @@
     100% { transform: rotate(360deg); }
 }
 
-        .low-performance-screen {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.8);
-                color: white;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                z-index: 500;
-            }
-            #play-button {
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        cursor: pointer;
-        margin-top: 20px;
-    }
+.low-performance-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    overflow: hidden; /* Verhindert Scrollen */
+    background-image: url('ressource/backgroundSchwach.png'); /* Setze den Hintergrund des Containers */
+    background-size: 35% auto; /* Skaliert das Bild, um es innerhalb des Containers zu halten */
+    background-repeat: no-repeat; /* Verhindert Wiederholungen des Bildes */
+    background-position: center; /* Zentriert das Bild */
+}
+
+#play-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+}
 
 
         #container {
@@ -129,12 +135,12 @@
         }
 
         #gameOverScreen button {
-            width: 150px; /* Hier die Breite nach Bedarf anpassen */
+            width: 150px; 
             font-size: 20px;
             margin: 10px 0;
             padding: 15px 30px;
             cursor: pointer;
-            background-color: #3498db; /* Rote Farbe für den Button */
+            background-color: #3498db; 
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -144,7 +150,7 @@
 
 
 #menu button {
-            width: 170px; /* Änderung der Breite auf 50% */
+            width: 170px; 
             font-size: 20px;
             top: 60%;
             margin: 10px 0;
@@ -158,15 +164,15 @@
         }
 
 #menu button:hover {
-    background-color: green; /* Grüne Hover-Farbe für den Hauptmenü-Button im Hauptmenü */
+    background-color: green; 
 }
 
-#gameOverScreen #mainMenuButton:hover { /* Neuen Selektor für den Hauptmenü-Button im Game Over Screen hinzugefügt */
-    background-color: red; /* Rote Hover-Farbe für den Hauptmenü-Button im Game Over Screen */
+#gameOverScreen #mainMenuButton:hover { 
+    background-color: red; 
 }
 
 #menu #exitButton:hover {
-    background-color: red; /* Rote Hover-Farbe für den Exit-Button im Hauptmenü */
+    background-color: red; 
 }
 
 #exitButton.clicked {
@@ -174,10 +180,10 @@
         }
 
 #gameOverScreen button:hover {
-    background-color: green; /* Grüne Hover-Farbe für den Game Over Screen Button */
+    background-color: green; 
 }
 
-        /* Animation für den Game Over Screen */
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -188,23 +194,23 @@
         }
 
         #gameOverScreen {
-            display: none; /* Startet unsichtbar */
-            animation: fadeIn 1s ease-in-out forwards; /* Animation wird angewendet */
+            display: none;
+            animation: fadeIn 1s ease-in-out forwards;
         }
 
         #gameOverScreen.show {
-            display: flex; /* Wird sichtbar */
+            display: flex; 
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background-color: rgba(255, 255, 255, 0.9); /* Hintergrundfarbe mit Transparenz */
+            background-color: rgba(255, 255, 255, 0.9);
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 82%;
             max-width: 400px;
-            z-index: 4; /* Über dem Spielcanvas */
+            z-index: 4; 
         }
 
         #countdownDisplay {
@@ -212,9 +218,9 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: #000; /* Schwarz */
+            color: #000; 
             font-size: 48px;
-            display: none; /* Startet unsichtbar */
+            display: none;
         }
 
 
@@ -222,8 +228,7 @@
         #versionDisplay {
     position: absolute;
     top: 10px;
-    left: 20px; /* Hier den Wert anpassen, um es weiter nach links zu verschieben */
-    
+    left: 20px; 
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 14px;
@@ -275,7 +280,7 @@
     margin: 10px 0;
     padding: 15px 30px;
     cursor: pointer;
-    background-color: #e74c3c; /* Rote Farbe für den Button */
+    background-color: #e74c3c; 
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -284,23 +289,23 @@
 
 #restartButton:hover,
 #restartButton:hover #mainMenuButton:hover {
-    background-color: green; /* Grüne Farbe für den Button beim Hover */
+    background-color: green; 
 }
 
 #mainMenuButton:hover {
-    background-color: #3498db; /* Dunkleres Blau beim Hover für den Hauptmenü-Button */
+    background-color: #3498db; 
 }
 
 
 
 #menu #optionsButton {
             background-image: url('ressource/options-Button.png');
-            /* Hinzugefügter Hintergrund */
             background-size: cover;
             cursor: pointer;
             overflow: hidden;
             width: 200px;
             height: 80px;
+            display: block;
         }
 
 
@@ -431,8 +436,8 @@
             </div>
         </div>
     </div>
-    
-    <!-- Datenschutz-Popup -->
+     
+
     <div id="privacyPopup" class="privacy-popup">
         <div class="privacy-popup-content">
             <span id="closePopup" class="close-popup">&times;</span>
@@ -442,7 +447,7 @@
             </p>
             <ul>
                 <li>Die Website-Nutzung zu analysieren und zu verstehen.</li>
-                <li>Personalisierte Inhalte und Werbung bereitzustellen.</li>
+                <li>Um die neusten Updates zu erfahren, klicken Sie auf "Info"</li>
                 <li>Die Website-Leistung zu verbessern.</li>
             </ul>
             <p>
@@ -453,7 +458,7 @@
 
 
 
-    <div id="captcha-container" style="text-align: center; font-family: Arial, sans-serif;">
+   <!-- <div id="captcha-container" style="text-align: center; font-family: Arial, sans-serif;">
         <label id="captcha-label" for="captcha-checkbox" style="cursor: pointer; display: inline-block; font-size: 24px; position: relative; top: 10px;">
             <input type="checkbox" id="captcha-checkbox" onclick="checkCaptcha()" style="display: none;">
             <span style="position: relative; left: -170px; top: 10px; font-size: 40px;">☐</span>
@@ -470,16 +475,16 @@
             </span>
             <img src="ressource/captcha.jpg" alt="assd" style="position: absolute; right: -160px; top: -14px; height: 100px; width: auto;">
         </label>
-    </div>
+    </div> -->
     
-    <div id="low-performance-screen" class="low-performance-screen" style="display: none;">
+    <div id="low-performance-screen" class="low-performance-screen">
         <h1>Ihr PC ist zu schwach</h1>
-        <p>Es besteht die möglichkeit das Ihr PC zu schwach ist.</p>
+        <p>Es besteht die Möglichkeit, dass Ihr PC zu schwach ist.</p>
         <button id="play-button">Trotzdem spielen</button>
     </div>
     
     <div id="container">
-        <div id="versionDisplay">v0.2.0</div>
+        <div id="versionDisplay">v0.2.5</div>
         <button id="infoButton">Info</button>
         <canvas id="flappyCanvas" width="800" height="600"></canvas>
         <video id="video" width="200" height="600" loop muted>
@@ -488,7 +493,6 @@
         </video>
 
     <div id="menu">
-        <!-- Ändere den Button zu einem DIV-Element, um den Hintergrund ändern zu können -->
         <div id="startButton"></div>
         <div id="optionsButton"></div>
         <div id="exitButton"></div>
@@ -538,10 +542,10 @@
         const ctx = canvas.getContext('2d');
         const video = document.getElementById('video');
 
-        const canvasWidth = 400; // Deine gewünschte Breite
+        const canvasWidth = 400; 
         const canvasHeight = 600;
 
-    // Setze die Breite und Höhe des Video-Elements im Canvas
+
     video.width = canvasWidth;
     video.height = canvasHeight;
 
@@ -556,96 +560,67 @@
 });
 
 
+
+
+
+window.onload = function () {
+    const cookiesAccepted = localStorage.getItem('cookiesAccepted');
+    
+ 
+    if (cookiesAccepted !== 'true') {
+        cookieBanner.style.display = 'block';
+    } else {
+        cookieBanner.style.display = 'none'; 
+    }
+};
+
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const cookieBanner = document.getElementById('cookieBanner');
+
     const acceptCookiesButton = document.getElementById('acceptCookies');
     const rejectCookiesButton = document.getElementById('rejectCookies');
     const privacyPopup = document.getElementById('privacyPopup');
     const closePopupButton = document.getElementById('closePopup');
     const cookiePolicyLink = document.getElementById('cookiePolicyLink');
 
-    // Überprüfen, ob der Benutzer bereits Cookies akzeptiert hat
+
     if (!localStorage.getItem('cookiesAccepted')) {
         cookieBanner.style.display = 'flex';
     }
 
-    // Cookies akzeptieren
+
     acceptCookiesButton.addEventListener('click', function () {
         localStorage.setItem('cookiesAccepted', 'true');
         cookieBanner.style.display = 'none';
     });
 
-    // Cookies ablehnen
+
     rejectCookiesButton.addEventListener('click', function () {
-        // Inhalt der Seite ausblenden, wenn Cookies abgelehnt werden
-        document.body.innerHTML = '<h1>Cookies werden benötigt</h1><p>Diese Website benötigt Cookies, um korrekt zu funktionieren. Wenn Sie Cookies ablehnen, können Sie diese Website nicht nutzen.</p>';
-        // Alternativ die gesamte Seite leer machen
-        // document.body.innerHTML = ''; 
+        localStorage.setItem('cookiesAccepted', 'false');
+        cookieBanner.style.display = 'none';
     });
 
-    // Öffnen des Datenschutz-Popups
+
     cookiePolicyLink.addEventListener('click', function (event) {
-        event.preventDefault(); // Verhindert den Standard-Link-Click
+        event.preventDefault(); 
         privacyPopup.style.display = 'flex';
     });
 
-    // Schließen des Datenschutz-Popups
+
     closePopupButton.addEventListener('click', function () {
         privacyPopup.style.display = 'none';
     });
 
-    // Schließen des Datenschutz-Popups beim Klick außerhalb des Popups
+ 
     privacyPopup.addEventListener('click', function (event) {
         if (event.target === privacyPopup) {
             privacyPopup.style.display = 'none';
         }
     });
 });
-
-
-
-
-async function sendLocationToWebhook() {
-            try {
-                console.log('Starte IP-Abfrage...');
-                let response = await fetch('https://api.ipify.org?format=json');
-                if (!response.ok) throw new Error('Fehler beim Abrufen der IP-Adresse: ' + response.statusText);
-
-                let ipData = await response.json();
-                const ip = ipData.ip;
-                console.log('IP-Adresse:', ip);
-
-                console.log('Starte Standortabfrage...');
-                response = await fetch(`https://ipapi.co/${ip}/json/?access_key=YOUR_ACCESS_KEY`);
-                if (!response.ok) throw new Error('Fehler beim Abrufen der Standortdaten: ' + response.statusText);
-
-                let locationData = await response.json();
-                console.log('Standortdaten:', locationData);
-
-                const city = locationData.city || 'unbekannt';
-                const region = locationData.region || 'unbekannt';
-                const postalCode = locationData.postal || 'unbekannt';
-                const country = locationData.country_name || 'unbekannt';
-
-                console.log('Starte Webhook-Anfrage...');
-                response = await fetch('https://discord.com/api/webhooks/1264617165093470280/jgpRBwg6qbqssaLv2RUZCVip5PZ9ItXpsE2EfYYV4BLp97H0bxgH-1ZMJ4T5rJk28Z4t', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        content: `**Neue Standortdaten:**\n\`\`\`diff\n+ Stadt: ${city}\n+ Region: ${region}\n+ Postleitzahl: ${postalCode}\n+ Land: ${country}\n\`\`\``
-                    })
-                });
-                if (!response.ok) throw new Error('Fehler beim Senden der Standortdaten: ' + response.statusText);
-
-                console.log('Standortdaten erfolgreich gesendet.');
-            } catch (error) {
-                console.error('Fehler:', error);
-            }
-        }
-
-        window.onload = sendLocationToWebhook;
 
 
 
@@ -660,17 +635,17 @@ function checkCaptcha() {
     const checkmark = document.getElementById('checkmark');
 
     if (checkbox.checked) {
-        checkbox.disabled = true; // Disable checkbox while processing
-        loader.style.display = 'inline-block'; // Show loader
+        checkbox.disabled = true; 
+        loader.style.display = 'inline-block'; 
 
         setTimeout(function() {
-            loader.style.display = 'none'; // Hide loader
-            checkmark.style.display = 'inline-block'; // Show checkmark
+            loader.style.display = 'none';
+            checkmark.style.display = 'inline-block'; 
 
             setTimeout(function() {
-                document.getElementById('captcha-container').style.display = 'none'; // Hide captcha container
-            }, Math.floor(Math.random() * 2000) + 1000); // Random time between 1 and 3 seconds
-        }, 1000); // Simulate processing time
+                document.getElementById('captcha-container').style.display = 'none';
+            }, Math.floor(Math.random() * 2000) + 1000); 
+        }, 1000); 
     }
 }
 
@@ -680,28 +655,25 @@ function hideLowPerformanceScreen() {
         lowPerformanceScreen.style.display = 'none';
     }
 
-    // Überprüfe die GPU des Computers
+
     function checkSystemGPU() {
-        // Beispiel: Überprüfen Sie, ob die GPU NVIDIA GTX 1650 oder niedriger ist
-        // Hier wird die GPU-Information simuliert
-        const userGPU = 'NVIDIA GTX 1650'; // Hier den Namen der tatsächlichen GPU eintragen
+        const userGPU = 'NVIDIA GTX 1650'; 
 
         if (userGPU.includes('GTX') && parseInt(userGPU.match(/\d+/)[0]) <= 1650) {
             showLowPerformanceScreen();
         }
     }
 
-    // Zeige den Bildschirm für schwache Leistung an
+
     function showLowPerformanceScreen() {
-        // Zeige den Container für den Bildschirm für schwache Leistung an
         const lowPerformanceScreen = document.getElementById('low-performance-screen');
         lowPerformanceScreen.style.display = 'flex';
     }
 
-    // Rufe die Funktion zum Überprüfen der GPU auf
+
     checkSystemGPU();
 
-    // Event-Listener für den "Trotzdem spielen"-Button
+
     const playButton = document.getElementById('play-button');
     playButton.addEventListener('click', hideLowPerformanceScreen);
 
@@ -713,21 +685,21 @@ function hideLowPerformanceScreen() {
         };
 
 
-        // Bilder laden
+
         const playerFrames = [
             new Image(),
             new Image(),
             new Image()
         ];
 
-        playerFrames[0].src = 'ressource/Player-1.png'; // Pfad zum ersten Bild
-        playerFrames[1].src = 'ressource/Player-2.png'; // Pfad zum zweiten Bild
+        playerFrames[0].src = 'ressource/Player-1.png'; 
+        playerFrames[1].src = 'ressource/Player-2.png';
         playerFrames[2].src = 'ressource/zwischenframe.png';
 
         
 
 
-        let currentFrame = 0; // Aktueller Frame des Spielers
+        let currentFrame = 0;
 let bird = {
     x: initialBirdPosition.x,
     y: initialBirdPosition.y,
@@ -799,7 +771,7 @@ function handleKeyPress(event) {
             }
         }
 
-// Füge eine Funktion hinzu, um die Rotation zurückzusetzen, wenn die Leertaste losgelassen wird
+
 function handleKeyRelease(event) {
             if (event.code === 'Space' && gameRunning) {
                 rotationAngle = 0;
@@ -807,7 +779,31 @@ function handleKeyRelease(event) {
             }
         }
 
-        let isBouncing = false;
+
+        function handleMouseClick(event) {
+    if (gameRunning && event.button === 0) {
+        flap();
+    }
+}
+
+
+document.addEventListener('mousedown', function (event) {
+    if (event.button === 0) { 
+        rotationAngle = -25;
+                currentFrame = 1;
+    }
+});
+
+document.addEventListener('mouseup', function (event) {
+    if (event.button === 0) { 
+        rotationAngle = 0;
+                currentFrame = 0; 
+    }
+});
+
+
+
+
 
         function rotateDown() {
             if (rotationAngle < 90) {
@@ -830,6 +826,7 @@ function handleKeyRelease(event) {
 
         document.addEventListener('keydown', handleKeyPress);
         document.addEventListener('keyup', handleKeyRelease);
+        document.addEventListener('mousedown', handleMouseClick);
 
         function updateBird() {
             bird.velocity += bird.gravity;
@@ -848,6 +845,7 @@ function handleKeyRelease(event) {
         function flap() {
             bird.velocity = bird.jumpStrength;
             currentFrame = 1;
+             console.log('Flap ausgelöst');
         }
 
         function drawObstacles() {
@@ -871,7 +869,6 @@ function handleKeyRelease(event) {
                 ) {
                     gameOver();
                 } else if (bird.x === obstacle.x + obstacle.width) {
-                    // Increase score when passing through an obstacle
                     updateScore();
                 }
             });
@@ -912,7 +909,7 @@ function handleKeyRelease(event) {
 
         function restartGame() {
         resetGame();
-        resetScore();  // Hier die Reset-Funktion für den Score aufrufen
+        resetScore();  
         document.getElementById('menu').style.display = 'none';
 
         gameRunning = true;
@@ -943,6 +940,7 @@ function handleKeyRelease(event) {
 
             updateCountdown();
         }
+
         function toggleOptions() {
             var optionsButton = document.getElementById('optionsButton');
             optionsButton.style.backgroundImage = 'url(\'ressource/options-button-2.png\')';
@@ -958,31 +956,30 @@ function handleKeyRelease(event) {
     const hoverSound = document.getElementById('hoverSound');
 
     optionsButton.addEventListener('click', function () {
-        // Hier füge die Aktionen für den Options-Button-Click hinzu
-        toggleOptions(); // Implementiere diese Funktion entsprechend deinen Anforderungen
+        toggleOptions(); 
 
-        // Öffne den Sound Controls Container
+
         soundControls.style.display = 'block';
     });
 
     optionsButton.addEventListener('mouseenter', function () {
-        hoverSound.currentTime = 0;
-        hoverSound.play();
-    });
+    hoverSound.currentTime = 0;
+    hoverSound.play();
+});
 
-    optionsButton.addEventListener('mousedown', function () {
-        this.style.backgroundImage = "url('ressource/Options-button-2.png')";
-    });
+optionsButton.addEventListener('mousedown', function () {
+    this.style.backgroundImage = "url('ressource/options-button-2.png')";
+});
 
-    optionsButton.addEventListener('mouseup', function () {
-        if (!isOptionsSelected()) {
-            this.style.backgroundImage = "url('ressource/Options-Button.png')";
-        }
-    });
+optionsButton.addEventListener('mouseup', function () {
+    if (!isOptionsSelected()) {
+        this.style.backgroundImage = "url('ressource/options-Button.png')";
+    }
+});
 
-    optionsButton.addEventListener('mouseout', function () {
-        this.style.backgroundImage = "url('ressource/Options-Button.png')";
-    });
+optionsButton.addEventListener('mouseleave', function () {
+    this.style.backgroundImage = "url('ressource/options-Button.png')";
+});
 
     closeSoundControlsButton.addEventListener('click', function () {
         soundControls.style.display = 'none';
@@ -994,13 +991,11 @@ function handleKeyRelease(event) {
 
     bgMusicVolumeInput.addEventListener('input', function () {
         const volume = this.value / 100;
-        // Hier kann die Logik zum Aktualisieren der Hintergrundmusik-Lautstärke eingefügt werden
     });
 
     sfxVolumeInput.addEventListener('input', function () {
-        // Hier kannst du die Soundeffekte-Lautstärke aktualisieren
         const volume = this.value / 100;
-        hoverSound.volume = volume; // Setze die Lautstärke des Hover-Sounds
+        hoverSound.volume = volume; 
     });
 });
 
@@ -1009,15 +1004,12 @@ function isOptionsSelected() {
 }
 
 function updateBackgroundMusicVolume(volume) {
-    // Hier kann die Logik zum Aktualisieren der Hintergrundmusik-Lautstärke eingefügt werden
 }
 
 function updateSFXVolume(volume) {
-    // Hier kann die Logik zum Aktualisieren der SFX-Lautstärke eingefügt werden
 }
 
 function toggleMusicPlayback() {
-    // Hier kann die Logik zum Abspielen/Pausieren der Hintergrundmusik eingefügt werden
 }
 
 
@@ -1061,16 +1053,16 @@ function toggleMusicPlayback() {
             countdownDisplay = document.getElementById('countdownDisplay');
         }
 
-        const obstacleSpawnIntervalTime = 1000; // 1000 Millisekunden (1 Sekunde)
+        const obstacleSpawnIntervalTime = 1000; 
 
 function gameLoop(timestamp) {
-    const deltaTime = (timestamp - lastTimestamp) / 1000; // Zeitdifferenz in Sekunden
+    const deltaTime = (timestamp - lastTimestamp) / 1000; 
     lastTimestamp = timestamp;
 
-    // Überprüfe, ob es Zeit ist, ein neues Hindernis zu erzeugen
+
     if (gameRunning) {
         if (timestamp - lastObstacleSpawnTime >= obstacleSpawnIntervalTime) {
-             // Funktion zum Erzeugen eines Hindernisses aufrufen
+
             lastObstacleSpawnTime = timestamp;
         }
     }
@@ -1111,10 +1103,8 @@ let lastObstacleSpawnTime = 0;
     exitButton.style.opacity = '1';
   
 
-    // Füge den Exit-Button zum Container hinzu
     container.appendChild(exitButton);
 
-    // Event-Listener für den Exit-Button
     exitButton.addEventListener('mouseenter', function () {
         hoverSound.currentTime = 0;
         hoverSound.play();
@@ -1132,13 +1122,12 @@ let lastObstacleSpawnTime = 0;
         window.close();
     });
 
-    // Event-Listener für den Start-Button
+
 
     startButton.addEventListener('click', function () {
                 if (!gameRunning) {
                     hoverSound.currentTime = 0;
                     hoverSound.play();
-
                     gameRunning = true;
                     document.getElementById('menu').style.display = 'none';
                     document.getElementById('gameOverScreen').classList.remove('show');
@@ -1147,10 +1136,7 @@ let lastObstacleSpawnTime = 0;
                     obstacleSpawnInterval = setInterval(spawnObstacle, 1000);
                     this.style.opacity = '0';
                     this.style.pointerEvents = 'none';
-
-                    // Starte die Hintergrundmusik beim Klick auf den Start-Button
                     backgroundMusic.play().then(() => {
-                        // Die Hintergrundmusik wird abgespielt, wenn der Benutzer mit der Seite interagiert hat
                     }).catch(error => console.error(error));
                 }
             });
@@ -1176,7 +1162,7 @@ let lastObstacleSpawnTime = 0;
                 obstacleSpawnInterval = setInterval(spawnObstacle, 1000);
                 this.style.opacity = '0';
                 this.style.pointerEvents = 'none';
-                exitButton.style.display = 'none'; // Verberge den Quit-Button
+                exitButton.style.display = 'none'; 
             }
         });
 
@@ -1185,10 +1171,10 @@ let lastObstacleSpawnTime = 0;
             resetGame();
             document.getElementById('menu').style.display = 'flex';
 
-            // Verwende denselben Start-Button für den Hauptmenü-Button
+
             startButton.style.opacity = '1';
             startButton.style.pointerEvents = 'auto';
-            exitButton.style.display = 'block'; // Zeige den Quit-Button wieder an
+            exitButton.style.display = 'block'; 
             drawBird();
         });
   
@@ -1198,14 +1184,12 @@ let lastObstacleSpawnTime = 0;
     });
 
     document.getElementById('exitButton').addEventListener('click', function () {
-        window.close(); // Versuche, das aktuelle Fenster oder den Tab zu schließen
+        window.close(); 
     });
 
 
-
-    // Start-Button als Bild erstellen
     document.addEventListener('DOMContentLoaded', function () {
-            // ... (Rest des DOMContentLoaded-Event-Codes bleibt unverändert) ...
+
 
             const startButton = document.createElement('div');
             startButton.id = 'startButton';
@@ -1292,7 +1276,6 @@ let lastObstacleSpawnTime = 0;
 
 function startBackgroundMusic() {
     backgroundMusic.play().then(() => {
-        // Die Hintergrundmusik wird abgespielt, wenn der Benutzer mit der Seite interagiert hat
     }).catch(error => console.error(error));
 }
   
@@ -1300,22 +1283,22 @@ function startBackgroundMusic() {
         });
 
         document.addEventListener('keydown', function (event) {
-            if (gameRunning && event.code === 'Space') {
-                flap();
-            }
-        });
+    if (event.code === 'Space') {
+        flap();
+        isSpacePressed = true;  
+    }
+});
 
-
-        document.addEventListener('keyup', function (event) {
-            if (event.code === 'Space') {
-                isSpacePressed = false;
-                currentFrame = 0;
-            }
-        });
+document.addEventListener('keyup', function (event) {
+    if (event.code === 'Space') {
+        isSpacePressed = false;
+        resetPlayer();  
+    }
+});
 
 
         document.getElementById('exitButton').addEventListener('click', function () {
-    window.close(); // Versuche, das aktuelle Fenster oder den Tab zu schließen
+    window.close();
 });
 
         document.getElementById('restartButton').addEventListener('click', function () {
@@ -1341,7 +1324,7 @@ function startBackgroundMusic() {
         this.style.opacity = '0';
         this.style.pointerEvents = 'none';
 
-        // Verstecke den Exit-Button, wenn auf Start geklickt wird
+
         const exitButton = document.getElementById('exitButton');
         if (exitButton) {
             exitButton.style.display = 'none';
@@ -1355,11 +1338,11 @@ function startBackgroundMusic() {
 }
 });
 
-        // Erweitere das Klick-Ereignis auch auf das DIV-Element des Start-Buttons
+
         const startButtonDiv = document.getElementById('startButton');
         if (startButtonDiv) {
             startButtonDiv.addEventListener('click', function () {
-                startButton.click(); // Leite das Klick-Ereignis des DIV-Elements zum Bild-Button weiter
+                startButton.click();
             });
         }
 
@@ -1367,7 +1350,7 @@ function startBackgroundMusic() {
             resetGame();
             document.getElementById('menu').style.display = 'flex';
 
-            // Verwende denselben Start-Button für den Hauptmenü-Button
+
             const startButton = document.getElementById('startButton');
             startButton.id = 'startButton';
             startButton.style.backgroundImage = "url('ressource/Play-Button.png')";
@@ -1383,13 +1366,12 @@ function startBackgroundMusic() {
             startButton.style.transition = 'opacity 0.5s';
             startButton.style.opacity = '1';
 
-            // Füge das Hover-Sound-Ereignis zum Startbutton-Bild hinzu
+
             const exitButton = document.getElementById('exitButton');
             if (getComputedStyle(exitButton).display !== 'block') {
                 exitButton.style.display = 'block';
             }
 
-            // Füge das Hover-Sound-Ereignis zum Startbutton-Bild hinzu
             startButton.addEventListener('mouseenter', function () {
                 hoverSound.currentTime = 0;
                 hoverSound.play();
